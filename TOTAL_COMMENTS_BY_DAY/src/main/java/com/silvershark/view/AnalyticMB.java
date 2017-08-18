@@ -16,6 +16,8 @@ import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 
 import com.silvershark.connection.ConnectionFactory;
+import com.silvershark.connection.PhoenixJDBCConnection;
+import com.silvershark.control.AnalyticCtrl;
 
 /**
  * @author Rodrigo
@@ -34,7 +36,9 @@ public class AnalyticMB implements Serializable {
     
     public AnalyticMB(){
     	 System.out.println("auuuu");
-         new ConnectionFactory().getConnection();
+//         new ConnectionFactory().getConnection();
+    	 AnalyticCtrl ctrl = new AnalyticCtrl();
+    	 ctrl.getTotalLikesByDay();
     }
  
     @PostConstruct
