@@ -8,10 +8,6 @@
 		<h:outputStylesheet library="css" name="main.css" />
 	</h:head>
 	<h:body>
-		<h:panelGroup id="panelId" layout="block">
-			<h:outputText styleClass="bold-hello-world"
-				value="#{i18n['TOTAL_LIKES_BY_DAY-hello-world']}" />
-		</h:panelGroup>
 		<p:chart type="bar" model="#{chartView.barModel}" style="height:300px" />
 	</h:body>
 </f:view>
