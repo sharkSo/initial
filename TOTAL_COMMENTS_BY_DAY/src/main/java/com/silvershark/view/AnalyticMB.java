@@ -15,6 +15,8 @@ import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 
+import com.silvershark.connection.ConnectionFactory;
+
 /**
  * @author Rodrigo
  *
@@ -29,11 +31,17 @@ public class AnalyticMB implements Serializable {
 	private static final long serialVersionUID = -2986425860606060894L;
 	private BarChartModel barModel;
     private HorizontalBarChartModel horizontalBarModel;
+    
+    public AnalyticMB(){
+    	 System.out.println("auuuu");
+         new ConnectionFactory().getConnection();
+    }
  
     @PostConstruct
     public void init() {
         createBarModels();
     }
+    
  
     public BarChartModel getBarModel() {
         return barModel;
