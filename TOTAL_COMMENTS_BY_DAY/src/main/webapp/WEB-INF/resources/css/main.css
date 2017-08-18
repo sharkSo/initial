@@ -1,3 +1,7 @@
 .bold-hello-world {
     font-weight: bold;
 }
+
+.portlet-title-text{
+    display: none;
+}
