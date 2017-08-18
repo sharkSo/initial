@@ -21,7 +21,7 @@ public class PhoenixJDBCConnection {
     
         
         //String url = "jdbc:mysql://localhost:3306/aula1";
-       String url = "jdbc:avatica:remote:url=http://sandbox:8765;serialization=PROTOBUF";
+       String url = "jdbc:avatica:remote:url=http://silvershark.westus.cloudapp.azure.com:8765;serialization=PROTOBUF";
         //String url = "jdbc:phoenix:sandbox:2181:/hbase-unsecure"; //Nome da base de dados
         String user = ""; //nome do usuário do MySQL
         String password = ""; //senha do MySQL
