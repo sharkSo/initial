@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.silvershark.control;
+package com.silvershark.view;
 
 import java.io.Serializable;
 
