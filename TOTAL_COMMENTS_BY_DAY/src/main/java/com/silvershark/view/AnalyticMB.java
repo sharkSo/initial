@@ -4,6 +4,11 @@
 package com.silvershark.view;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -33,18 +38,22 @@ public class AnalyticMB implements Serializable {
 	private static final long serialVersionUID = -2986425860606060894L;
 	private BarChartModel barModel;
     private HorizontalBarChartModel horizontalBarModel;
+    private BarChartModel model = null;
+    private ChartSeries boys = null;
+    private ArrayList<String> lis = null;
     
     public AnalyticMB(){
-    	 System.out.println("auuuu");
-//         new ConnectionFactory().getConnection();
-    	 AnalyticCtrl ctrl = new AnalyticCtrl();
-    	 ctrl.getTotalLikesByDay();
+    	 
     }
  
-    @PostConstruct
-    public void init() {
-        createBarModels();
-    }
+	@PostConstruct
+	public void init() {
+		System.out.println("auuuu");
+		// new ConnectionFactory().getConnection();
+		AnalyticCtrl ctrl = new AnalyticCtrl();
+		lis = (ArrayList<String>) ctrl.getTotalLikesByDay();
+		createBarModels();
+	}
     
  
     public BarChartModel getBarModel() {
@@ -56,26 +65,47 @@ public class AnalyticMB implements Serializable {
     }
  
     private BarChartModel initBarModel() {
-        BarChartModel model = new BarChartModel();
- 
-        ChartSeries boys = new ChartSeries();
-        boys.setLabel("Boys");
-        boys.set("2004", 120);
-        boys.set("2005", 100);
-        boys.set("2006", 44);
-        boys.set("2007", 150);
-        boys.set("2008", 25);
- 
-        ChartSeries girls = new ChartSeries();
-        girls.setLabel("Girls");
-        girls.set("2004", 52);
-        girls.set("2005", 60);
-        girls.set("2006", 110);
-        girls.set("2007", 135);
-        girls.set("2008", 120);
+        model = new BarChartModel();
+        boys = new ChartSeries();
+        
+        SimpleDateFormat formato = new SimpleDateFormat( "dd/MM/yyyy" );
+        try {
+			Date data = formato.parse( "23/11/2015" );
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(data);
+			cal.add(Calendar.DATE, 1);
+			data = cal.getTime();
+			String d = formato.format(data);
+			System.out.println(d);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        try{
+        	
+        }catch(Exception e){
+        	
+        }
+        
+        boys.setLabel("Comments");
+        
+        boys.set("14/09/1952", 25);
+        boys.set("1", 0);
+        boys.set("2", 0);
+        boys.set("3", 0);
+        boys.set("4", 0);
+        boys.set("5", 0);
+        boys.set("6", 0);
+        
+        for(int i = 0; i < lis.size(); i++){
+//        	
+        }
+        
+        
+        
  
         model.addSeries(boys);
-        model.addSeries(girls);
          
         return model;
     }
@@ -88,16 +118,17 @@ public class AnalyticMB implements Serializable {
     private void createBarModel() {
         barModel = initBarModel();
          
-        barModel.setTitle("Bar Chart");
+        barModel.setTitle("Total Comments by Day");
         barModel.setLegendPosition("ne");
          
         Axis xAxis = barModel.getAxis(AxisType.X);
-        xAxis.setLabel("Gender");
+        xAxis.setLabel("Day");
+//        xAxis.
          
         Axis yAxis = barModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Births");
+        yAxis.setLabel("Total Comments");
         yAxis.setMin(0);
-        yAxis.setMax(200);
+        yAxis.setMax(100);
     }
      
     private void createHorizontalBarModel() {
@@ -132,7 +163,7 @@ public class AnalyticMB implements Serializable {
         xAxis.setMax(200);
          
         Axis yAxis = horizontalBarModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Gender");        
+        yAxis.setLabel("Day");        
     }
  
 }

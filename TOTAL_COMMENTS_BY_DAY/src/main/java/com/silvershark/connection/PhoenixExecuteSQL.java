@@ -1,5 +1,7 @@
 package com.silvershark.connection;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Connection;
@@ -76,7 +78,9 @@ public class PhoenixExecuteSQL {
         }
     }
 
-    public static void writeResultSet(ResultSet resultSet) throws SQLException {
+    public static List<String> writeResultSet(ResultSet resultSet) throws SQLException {
+    	
+    	List<String> list = new ArrayList<String>();
 
         int[] types = new int[]{java.sql.Types.ARRAY, java.sql.Types.BIGINT, java.sql.Types.BINARY,
             java.sql.Types.BIT, java.sql.Types.BLOB, java.sql.Types.BOOLEAN,
@@ -111,6 +115,8 @@ public class PhoenixExecuteSQL {
                         String s = resultSet.getString(resultSet.getMetaData().getColumnName(i));
 
                         System.out.println(resultSet.getMetaData().getColumnName(i) + ": " + s);
+                        
+                        list.add(s);
 
                     }
 
@@ -119,6 +125,7 @@ public class PhoenixExecuteSQL {
             }
 
         }
+        return list;
     }
 
 }
