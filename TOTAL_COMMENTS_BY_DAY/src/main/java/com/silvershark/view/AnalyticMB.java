@@ -9,6 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -41,6 +44,7 @@ public class AnalyticMB implements Serializable {
     private BarChartModel model = null;
     private ChartSeries boys = null;
     private ArrayList<String> lis = null;
+    private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
     
     public AnalyticMB(){
     	 
@@ -48,8 +52,6 @@ public class AnalyticMB implements Serializable {
  
 	@PostConstruct
 	public void init() {
-		System.out.println("auuuu");
-		// new ConnectionFactory().getConnection();
 		AnalyticCtrl ctrl = new AnalyticCtrl();
 		lis = (ArrayList<String>) ctrl.getTotalLikesByDay();
 		createBarModels();
@@ -64,51 +66,51 @@ public class AnalyticMB implements Serializable {
         return horizontalBarModel;
     }
  
-    private BarChartModel initBarModel() {
-        model = new BarChartModel();
-        boys = new ChartSeries();
-        
-        SimpleDateFormat formato = new SimpleDateFormat( "dd/MM/yyyy" );
-        try {
-			Date data = formato.parse( "23/11/2015" );
+	private BarChartModel initBarModel() {
+
+		model = new BarChartModel();
+		boys = new ChartSeries();
+
+		boys.setLabel("Comments");
+
+		for (int i = 0; i < lis.size(); i++) {
+			SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date myDate = null;
+			try {
+				myDate = newDateFormat.parse(lis.get(i));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			newDateFormat.applyPattern("dd/MM/yyyy");
+			String myDateString = newDateFormat.format(myDate);
+			boys.set(myDateString, Integer.parseInt(lis.get(++i)));
+		}
+
+		model.addSeries(boys);
+		return model;
+	}
+    
+    
+    
+	private String addDay(String sData) {
+		try {
+			formato = new SimpleDateFormat("dd/MM/yyyy");
+			Date data = formato.parse(sData);
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(data);
 			cal.add(Calendar.DATE, 1);
 			data = cal.getTime();
 			String d = formato.format(data);
 			System.out.println(d);
+			return d;
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+//			return "number";
 		}
-        
-        try{
-        	
-        }catch(Exception e){
-        	
-        }
-        
-        boys.setLabel("Comments");
-        
-        boys.set("14/09/1952", 25);
-        boys.set("1", 0);
-        boys.set("2", 0);
-        boys.set("3", 0);
-        boys.set("4", 0);
-        boys.set("5", 0);
-        boys.set("6", 0);
-        
-        for(int i = 0; i < lis.size(); i++){
-//        	
-        }
-        
-        
-        
- 
-        model.addSeries(boys);
-         
-        return model;
-    }
+		return null;
+	}
      
     private void createBarModels() {
         createBarModel();
