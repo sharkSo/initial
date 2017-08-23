@@ -9,9 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -23,8 +21,6 @@ import org.primefaces.model.chart.BarChartModel;
 import org.primefaces.model.chart.ChartSeries;
 import org.primefaces.model.chart.HorizontalBarChartModel;
 
-import com.silvershark.connection.ConnectionFactory;
-import com.silvershark.connection.PhoenixJDBCConnection;
 import com.silvershark.control.AnalyticCtrl;
 
 /**
@@ -45,6 +41,8 @@ public class AnalyticMB implements Serializable {
     private ChartSeries boys = null;
     private ArrayList<String> lis = null;
     private SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private List<String> patterns = new ArrayList<String>();
     
     public AnalyticMB(){
     	 
@@ -74,7 +72,7 @@ public class AnalyticMB implements Serializable {
 		boys.setLabel("Comments");
 
 		for (int i = 0; i < lis.size(); i++) {
-			SimpleDateFormat newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date myDate = null;
 			try {
 				myDate = newDateFormat.parse(lis.get(i));
@@ -86,7 +84,33 @@ public class AnalyticMB implements Serializable {
 			String myDateString = newDateFormat.format(myDate);
 			boys.set(myDateString, Integer.parseInt(lis.get(++i)));
 		}
+		
+		// quantidade de par: data/count
+		int quant = lis.size() / 2;
+		String d = lis.get(lis.size() - 2);
+		
+		if(quant < 7){
+			while(quant < 7){
+				d = addDay(d);
+				patterns.add(d);
+				quant++;
+			}
+		}
+			
+		for (int i = 0; i < patterns.size(); i++) {
+			newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			Date myDate = null;
+			try {
+				myDate = newDateFormat.parse(patterns.get(i));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			newDateFormat.applyPattern("dd/MM/yyyy");
+			String myDateString = newDateFormat.format(myDate);
+			boys.set(myDateString, 0);
 
+		}
 		model.addSeries(boys);
 		return model;
 	}
@@ -95,15 +119,15 @@ public class AnalyticMB implements Serializable {
     
 	private String addDay(String sData) {
 		try {
-			formato = new SimpleDateFormat("dd/MM/yyyy");
 			Date data = formato.parse(sData);
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(data);
 			cal.add(Calendar.DATE, 1);
 			data = cal.getTime();
-			String d = formato.format(data);
-			System.out.println(d);
-			return d;
+			newDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+			String myDateString = newDateFormat.format(data);
+			System.out.println(myDateString);
+			return myDateString;
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

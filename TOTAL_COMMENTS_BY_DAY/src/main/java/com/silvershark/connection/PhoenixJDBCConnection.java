@@ -27,7 +27,7 @@ public class PhoenixJDBCConnection {
         String password = ""; //senha do MySQL
 
         connection = null;
-
+        
         try {
 
             Class.forName("org.apache.calcite.avatica.remote.Driver").newInstance();
