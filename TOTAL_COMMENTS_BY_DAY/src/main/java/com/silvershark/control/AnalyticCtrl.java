@@ -16,8 +16,8 @@ import com.silvershark.connection.PhoenixJDBCConnection;
  *
  */
 public class AnalyticCtrl {
-	
-	private static final String TOTAL_LIKES_BY_DAY = "SELECT TO_DATE(DATE_INPUT), COUNT(*) FROM FACEBOOK_FEED_DATA_LIKES GROUP BY DATE_INPUT ORDER BY TO_DATE(DATE_INPUT) ASC";
+														
+	private static final String TOTAL_LIKES_BY_DAY = "SELECT TO_DATE(DATE_INPUT), COUNT(*)FROM FACEBOOK_FEED_DATA_COMMENTS GROUP BY DATE_INPUT ORDER BY TO_DATE(DATE_INPUT) ASC";
 
 	@SuppressWarnings("static-access")
 	public List<String> getTotalLikesByDay(){
