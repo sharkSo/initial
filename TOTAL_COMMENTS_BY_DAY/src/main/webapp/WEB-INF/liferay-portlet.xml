@@ -5,6 +5,7 @@
 	<portlet>
 		<portlet-name>TOTAL_COMMENTS_BY_DAY</portlet-name>
 		<icon>/resources/images/icon.png</icon>
+		<use-default-template>false</use-default-template>
 		<requires-namespaced-parameters>false</requires-namespaced-parameters>
 		<ajaxable>false</ajaxable>
 	</portlet>
